@@ -9,32 +9,37 @@
 };
 
 / {
-    combos {
-        compatible = "zmk,combos";
+    runtime_combo_defaults {
+        compatible = "cormoran,runtime-combo-defaults";
 
-        tab {
-            bindings = <&kp TAB>;
+        combo_tab {
             key-positions = <11 12>;
+            bindings = <&kp TAB>;
+            display-name = "Tab";
         };
 
-        shift_tab {
-            bindings = <&kp LS(TAB)>;
+        combo_shift_tab {
             key-positions = <12 13>;
+            bindings = <&kp LS(TAB)>;
+            display-name = "Shift+Tab";
         };
 
-        muhennkann {
-            bindings = <&to_layer_0 INT_MUHENKAN>;
+        combo_muhenkan {
             key-positions = <11 10>;
+            bindings = <&to_layer_0 INT_MUHENKAN>;
+            display-name = "Muhenkan";
         };
 
-        double_quotation {
-            bindings = <&kp DOUBLE_QUOTES>;
+        combo_double_quotation {
             key-positions = <20 21>;
+            bindings = <&kp DOUBLE_QUOTES>;
+            display-name = "DoubleQuote";
         };
 
-        eq {
-            bindings = <&kp EQUAL>;
+        combo_eq {
             key-positions = <24 25>;
+            bindings = <&kp EQUAL>;
+            display-name = "Equal";
         };
     };
 
