@@ -10,9 +10,12 @@ manifest:
       revision: main+dya
       import: app/west.yml
 
-    - name: zmk-pmw3610-driver
+    # PMW3610ドライバ: DYA Studio診断タブ(センサー診断・フレーム表示)対応版
+    # zmk-pmw3610-driverのドロップイン置換(compatible "cormoran,pmw3610"は同一)。併用不可
+    - name: zmk-driver-pmw3610-with-custom-studio-rpc
       remote: cormoran
       revision: main
+      import: true
 
     # DYA Studio モジュール（すべて cormoran リポジトリ）
     - name: zmk-module-ble-management
@@ -35,6 +38,19 @@ manifest:
       revision: main
       import: true
     - name: zmk-feature-runtime-combo
+      remote: cormoran
+      revision: main
+      import: true
+
+    # DYA Studio 診断タブ用モジュール
+    - name: zmk-feature-device-info
+      remote: cormoran
+      revision: main
+    - name: zmk-feature-watchdog
+      remote: cormoran
+      revision: main
+      import: true
+    - name: zmk-feature-kscan-diagnostics
       remote: cormoran
       revision: main
       import: true
