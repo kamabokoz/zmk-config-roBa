@@ -43,12 +43,71 @@
         #input-processor-cells = <0>;
     };
 
+    // レイヤー別カーソル速度用の枠(speed1〜3)。初期値は倍率1/1(素通し)。
+    // DYA Studioのトラックボール画面で有効レイヤーと倍率を設定すると、そのレイヤーでだけ
+    // 速度が変わる(mouseプロセッサの倍率に掛け合わされる。例: 1/3で精細操作)。
+    // 枠が足りなければ同じ形で追加する(processor-labelは最大7文字)。
+    speed1_rip: speed1_rip {
+        compatible = "zmk,input-processor-runtime";
+        processor-label = "speed1";
+        type = <INPUT_EV_REL>;
+        x-codes = <INPUT_REL_X>;
+        y-codes = <INPUT_REL_Y>;
+        scale-multiplier = <1>;
+        scale-divisor = <1>;
+        rotation-degrees = <0>;
+        track-remainders;
+
+        temp-layer-transparent-behavior = <&trans>;
+        temp-layer-kp-behavior = <&kp>;
+        temp-layer-keep-keycodes = <LEFT_CONTROL LEFT_SHIFT LEFT_ALT LEFT_GUI RIGHT_CONTROL RIGHT_SHIFT RIGHT_ALT RIGHT_GUI>;
+
+        #input-processor-cells = <0>;
+    };
+
+    speed2_rip: speed2_rip {
+        compatible = "zmk,input-processor-runtime";
+        processor-label = "speed2";
+        type = <INPUT_EV_REL>;
+        x-codes = <INPUT_REL_X>;
+        y-codes = <INPUT_REL_Y>;
+        scale-multiplier = <1>;
+        scale-divisor = <1>;
+        rotation-degrees = <0>;
+        track-remainders;
+
+        temp-layer-transparent-behavior = <&trans>;
+        temp-layer-kp-behavior = <&kp>;
+        temp-layer-keep-keycodes = <LEFT_CONTROL LEFT_SHIFT LEFT_ALT LEFT_GUI RIGHT_CONTROL RIGHT_SHIFT RIGHT_ALT RIGHT_GUI>;
+
+        #input-processor-cells = <0>;
+    };
+
+    speed3_rip: speed3_rip {
+        compatible = "zmk,input-processor-runtime";
+        processor-label = "speed3";
+        type = <INPUT_EV_REL>;
+        x-codes = <INPUT_REL_X>;
+        y-codes = <INPUT_REL_Y>;
+        scale-multiplier = <1>;
+        scale-divisor = <1>;
+        rotation-degrees = <0>;
+        track-remainders;
+
+        temp-layer-transparent-behavior = <&trans>;
+        temp-layer-kp-behavior = <&kp>;
+        temp-layer-keep-keycodes = <LEFT_CONTROL LEFT_SHIFT LEFT_ALT LEFT_GUI RIGHT_CONTROL RIGHT_SHIFT RIGHT_ALT RIGHT_GUI>;
+
+        #input-processor-cells = <0>;
+    };
+
     trackball_listener {
         status = "okay";
         compatible = "zmk,input-listener";
         device = <&trackball>;
-        // スクロール変換を先に通す(変換後はWHEEL/HWHEELになるのでmouse側は素通り)
-        input-processors = <&trackball_scroll_rip &mouse_runtime_input_processor>;
+        // スクロール変換を先に通す(変換後はWHEEL/HWHEELになるので以降は素通り)
+        input-processors = <&trackball_scroll_rip &speed1_rip &speed2_rip &speed3_rip
+                            &mouse_runtime_input_processor>;
     };
 };
 
