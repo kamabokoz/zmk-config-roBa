@@ -19,18 +19,36 @@
 };
 
 / {
+    // スクロール用プロセッサ: 有効レイヤー(active-layers)の間だけXY移動をスクロールに変換する。
+    // 有効レイヤー・速度・向きはDYA Studioのトラックボール画面から変更できる。
+    // 他のレイヤーでは何もせず、後段のmouse_runtime_input_processorへそのまま渡す。
+    trackball_scroll_rip: trackball_scroll_rip {
+        compatible = "zmk,input-processor-runtime";
+        processor-label = "trackball_scroll";
+        type = <INPUT_EV_REL>;
+        x-codes = <INPUT_REL_X>;
+        y-codes = <INPUT_REL_Y>;
+        scale-multiplier = <1>;
+        scale-divisor = <60>;
+        rotation-degrees = <0>;
+        track-remainders;
+        xy-to-scroll-enabled;
+        y-invert;
+        active-layers = <(1 << 5)>; // 初期値: SCROLLレイヤー(5)
+
+        temp-layer-transparent-behavior = <&trans>;
+        temp-layer-kp-behavior = <&kp>;
+        temp-layer-keep-keycodes = <LEFT_CONTROL LEFT_SHIFT LEFT_ALT LEFT_GUI RIGHT_CONTROL RIGHT_SHIFT RIGHT_ALT RIGHT_GUI>;
+
+        #input-processor-cells = <0>;
+    };
+
     trackball_listener {
         status = "okay";
         compatible = "zmk,input-listener";
         device = <&trackball>;
-        input-processors = <&mouse_runtime_input_processor>;
-
-        scroller {
-            layers = <5>;
-            input-processors = 
-                <&zip_xy_to_scroll_mapper &scroll_runtime_input_processor>,
-                <&zip_scroll_transform INPUT_TRANSFORM_Y_INVERT>;
-        };
+        // スクロール変換を先に通す(変換後はWHEEL/HWHEELになるのでmouse側は素通り)
+        input-processors = <&trackball_scroll_rip &mouse_runtime_input_processor>;
     };
 };
 
