@@ -24,7 +24,7 @@
     // 他のレイヤーでは何もせず、後段のmouse_runtime_input_processorへそのまま渡す。
     trackball_scroll_rip: trackball_scroll_rip {
         compatible = "zmk,input-processor-runtime";
-        processor-label = "trackball_scroll";
+        processor-label = "tb_scrl"; // 最大7文字(CONFIG_ZMK_RUNTIME_INPUT_PROCESSOR_NAME_MAX_LEN=8)
         type = <INPUT_EV_REL>;
         x-codes = <INPUT_REL_X>;
         y-codes = <INPUT_REL_Y>;
